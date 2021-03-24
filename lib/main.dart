@@ -25,6 +25,29 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.teal,
         accentColor: Colors.teal,
         primarySwatch: Colors.teal,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.grey,
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(40),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(40.0),
+              ),
+            ),
+          ),
+        ),
+        dialogTheme: DialogTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         appBarTheme: AppBarTheme(
           elevation: 0,
           color: Colors.transparent,

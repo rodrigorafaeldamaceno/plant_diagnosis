@@ -21,7 +21,7 @@ class TFLiteHelper {
     List<TFLiteResult> outputs = [];
 
     final output = await Tflite.runModelOnImage(
-      path: image.path,
+      path: image?.path,
       imageMean: 0.0,
       imageStd: 255.0,
       numResults: 2,

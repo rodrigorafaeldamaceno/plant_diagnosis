@@ -1,24 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:plant_diagnosis/helpers/camera_helper.dart';
 import 'package:plant_diagnosis/helpers/tflite_helper.dart';
 import 'package:plant_diagnosis/models/examples/examples.dart';
 import 'package:plant_diagnosis/models/tflite_result.dart';
+import 'package:plant_diagnosis/stores/classified/classified_store.dart';
 
 class ClassifiedPage extends StatefulWidget {
-  final Examples example;
+  const ClassifiedPage({Key key}) : super(key: key);
 
-  const ClassifiedPage({Key key, this.example}) : super(key: key);
   @override
   _ClassifiedPageState createState() => _ClassifiedPageState();
 }
 
 class _ClassifiedPageState extends State<ClassifiedPage> {
-  File _image;
-  List<TFLiteResult> _outputs = [];
+  final controller = ClassifiedStore();
 
   @override
   void dispose() {
@@ -29,7 +29,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
   @override
   void initState() {
     super.initState();
-    TFLiteHelper.loadModel(widget.example);
+    TFLiteHelper.loadModel(listOfExamples.first);
   }
 
   _buildImage() {
@@ -45,56 +45,49 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
             ),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Center(
-            child: _image == null
-                ? Text('Without image')
-                : Stack(
-                    children: [
-                      Image.file(
-                        _image,
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                        right: 0,
-                        child: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            setState(() {
-                              _image = null;
-                              _outputs.clear();
-                            });
-                          },
+          child: Center(child: Observer(
+            builder: (_) {
+              return controller.image == null
+                  ? Text('Without image')
+                  : Stack(
+                      children: [
+                        Image.file(
+                          controller.image,
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    ],
-                  ),
-          ),
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.35),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                              ),
+                            ),
+                            child: IconButton(
+                              iconSize: 20,
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                controller.image = null;
+                                controller.outputs.clear();
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+            },
+          )),
         ),
       ),
     );
-  }
-
-  _pickImage({ImageSource source}) async {
-    final image = await CameraHelper.pickImage(source: source);
-    if (image == null) {
-      return null;
-    }
-
-    final outputs = await TFLiteHelper.classifyImage(image);
-
-    setState(() {
-      _image = image;
-      _outputs = outputs;
-    });
-
-    print(outputs);
   }
 
   _buildResult() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
       child: Container(
-        height: 150.0,
+        height: 100.0,
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.white,
@@ -108,35 +101,146 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
   }
 
   _buildResultList() {
-    if (_outputs.isEmpty) {
-      return Center(
-        child: Text('Without results'),
-      );
-    }
+    return Observer(
+      builder: (_) {
+        return controller.outputs.isEmpty
+            ? Center(
+                child: Text('Without results'),
+              )
+            : Center(
+                child: ListView.builder(
+                  itemCount: controller.outputs.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(20.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: <Widget>[
+                        Text(
+                          '${controller.outputs[index].label} ( ${(controller.outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        LinearPercentIndicator(
+                          lineHeight: 14.0,
+                          progressColor: Theme.of(context).primaryColor,
+                          percent: controller.outputs[index].confidence,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
+      },
+    );
+  }
 
-    return Center(
-      child: ListView.builder(
-        itemCount: _outputs.length,
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: <Widget>[
-              Text(
-                '${_outputs[index].label} ( ${(_outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              LinearPercentIndicator(
-                lineHeight: 14.0,
-                percent: _outputs[index].confidence,
-              ),
-            ],
-          );
-        },
-      ),
+  Widget buildFloatingButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.photo_camera),
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Wrap(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.photo_camera),
+                  title: Text('Camera'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    controller.pickImage(source: ImageSource.camera);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.photo_album),
+                  title: Text('Gallery'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    controller.pickImage(source: ImageSource.gallery);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future _showSaveDialog() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Center(child: Text('Informações sobre o diagnóstico')),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: controller.descriptionController,
+                  decoration:
+                      InputDecoration(hintText: 'Informe uma descrição'),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: controller.obsController,
+                  decoration: InputDecoration(
+                    hintText: 'Observações',
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
+                    ),
+                  ),
+                  maxLines: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text('Gravar localização?'),
+                    Observer(builder: (_) {
+                      return Switch(
+                        value: controller.saveLocation,
+                        onChanged: (value) {
+                          controller.saveLocation = value;
+                        },
+                      );
+                    }),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text('Salvar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancelar'),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -144,48 +248,104 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.example.description),
+        title: Text(listOfExamples.first.description),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.photo_camera),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Wrap(
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.photo_camera),
-                    title: Text('Camera'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      _pickImage(source: ImageSource.camera);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.photo_album),
-                    title: Text('Gallery'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      _pickImage(source: ImageSource.gallery);
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: buildFloatingButton(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _buildResult(),
-            _buildImage(),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Observer(
+                builder: (_) {
+                  return controller.outputs.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 100,
+                              ),
+                              Text(
+                                'Adicione uma imagem para análise',
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Wrap(
+                                          children: <Widget>[
+                                            ListTile(
+                                              leading: Icon(Icons.photo_camera),
+                                              title: Text('Camera'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                controller.pickImage(
+                                                  source: ImageSource.camera,
+                                                );
+                                              },
+                                            ),
+                                            ListTile(
+                                              leading: Icon(Icons.photo_album),
+                                              title: Text('Gallery'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                controller.pickImage(
+                                                  source: ImageSource.gallery,
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text('Adicionar imagem'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              _buildResult(),
+                              _buildImage(),
+                            ],
+                          ),
+                        );
+                },
+              )
+            ],
+          ),
         ),
+      ),
+      bottomNavigationBar: Observer(
+        builder: (_) {
+          return controller.outputs.isEmpty
+              ? const SizedBox(
+                  height: 0,
+                  width: 0,
+                )
+              : Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _showSaveDialog,
+                    child: Text('Salvar diagnóstico'),
+                  ),
+                );
+        },
       ),
     );
   }

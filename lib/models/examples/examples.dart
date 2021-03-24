@@ -14,18 +14,8 @@ class Examples {
 
 final listOfExamples = [
   Examples(
-    description: 'Cats and Dogs',
-    location: 'cats_and_dogs',
-    type: Types.CATS_AND_DOGS,
-  ),
-  Examples(
-    description: 'Strawberries',
+    description: 'Morangos',
     location: 'strawberries',
     type: Types.STRAWBERRIES,
   ),
-  Examples(
-    description: 'EasyAI',
-    location: 'easyai',
-    type: Types.EASY_AI,
-  )
 ];
