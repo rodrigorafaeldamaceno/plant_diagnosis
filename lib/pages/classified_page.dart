@@ -248,9 +248,13 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(listOfExamples.first.description),
+        title: Text('Análise'),
       ),
-      floatingActionButton: buildFloatingButton(),
+      floatingActionButton: Observer(
+        builder: (_) {
+          return controller.image == null ? SizedBox() : buildFloatingButton();
+        },
+      ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Container(
