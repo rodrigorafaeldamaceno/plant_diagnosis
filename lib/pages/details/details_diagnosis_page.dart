@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plant_diagnosis/db/database.dart';
@@ -28,10 +30,12 @@ class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
           child: Column(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.width * 0.8,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(widget.analyze.imageDir),
+                    image: FileImage(
+                      File(widget.analyze.imageDir),
+                    ),
                   ),
                 ),
               ),

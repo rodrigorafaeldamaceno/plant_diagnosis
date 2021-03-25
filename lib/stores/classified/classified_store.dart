@@ -36,6 +36,10 @@ abstract class _ClassifiedStoreBase with Store {
     return _dao.addAnalyze(analyze);
   }
 
+  Future removeAnalyze(int id) {
+    return _dao.removeAnalyze(id);
+  }
+
   @action
   Future pickImage({ImageSource source}) async {
     final imageTemp = await CameraHelper.pickImage(source: source);

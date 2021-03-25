@@ -21,6 +21,15 @@ class _HomePageState extends State<HomePage> {
     return Card(
       child: ListTile(
         title: Text(analyze.description),
+        trailing: IconButton(
+          icon: Icon(
+            Icons.highlight_remove_sharp,
+            color: Colors.red,
+          ),
+          onPressed: () {
+            controller.removeAnalyze(analyze.id);
+          },
+        ),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,

@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:plant_diagnosis/db/database.dart';
 import 'package:plant_diagnosis/helpers/camera_helper.dart';
+import 'package:plant_diagnosis/helpers/file_helper.dart';
 import 'package:plant_diagnosis/helpers/tflite_helper.dart';
 import 'package:plant_diagnosis/models/examples/examples.dart';
 import 'package:plant_diagnosis/models/tflite_result.dart';
@@ -181,8 +182,12 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
       longitude = location?.longitude;
     }
 
+    final imageDir = await FileHelper.saveFile(controller.image);
+
+    print(imageDir.path);
+
     final analyze = Analyze(
-      imageDir: 'assets/images/image.jpeg',
+      imageDir: imageDir.path,
       species: 'Morango',
       description: controller.descriptionController.text,
       date: DateTime.now(),
