@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:plant_diagnosis/db/database.dart';
 import 'package:plant_diagnosis/helpers/date_helper.dart';
 import 'package:plant_diagnosis/routes.dart';
 import 'package:plant_diagnosis/stores/classified/classified_store.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,35 +20,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget cardAnalyze({@required Analyze analyze}) {
-    return Card(
-      child: ListTile(
-        title: Text(analyze.description),
-        trailing: IconButton(
-          icon: Icon(
-            Icons.highlight_remove_sharp,
-            color: Colors.red,
-          ),
-          onPressed: () {
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Remover',
+          color: Colors.red,
+          icon: MdiIcons.delete,
+          onTap: () {
             controller.removeAnalyze(analyze.id);
           },
         ),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(analyze.species),
-            Text(DateHelper.getDateDDMMYYYY(analyze.date.toString()) +
-                ' - ' +
-                DateHelper.getHourMinute(analyze.date.toString())),
-          ],
+      ],
+      child: Card(
+        child: ListTile(
+          title: Text(analyze.description),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(analyze.species),
+              Text(DateHelper.getDateDDMMYYYY(analyze.date.toString()) +
+                  ' - ' +
+                  DateHelper.getHourMinute(analyze.date.toString())),
+            ],
+          ),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.detailsDiagnosis,
+              arguments: analyze,
+            );
+          },
         ),
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            Routes.detailsDiagnosis,
-            arguments: analyze,
-          );
-        },
       ),
     );
   }
