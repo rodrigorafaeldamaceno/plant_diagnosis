@@ -60,6 +60,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Análises'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20),
@@ -92,11 +95,6 @@ class _HomePageState extends State<HomePage> {
 
                   return Column(
                     children: [
-                      Text(
-                        'Histórico',
-                        style: TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
                       SizedBox(height: 40),
                       ListView.builder(
                         itemCount: listOfAnalysis.length,
