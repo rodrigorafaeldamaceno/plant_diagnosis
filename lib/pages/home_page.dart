@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_diagnosis/pages/classified_page.dart';
+import 'package:plant_diagnosis/pages/maps/map_sample.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,7 +38,14 @@ class _HomePageState extends State<HomePage> {
                           Text('14/05/1995'),
                         ],
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MapSample(),
+                          ),
+                        );
+                      },
                     ),
                   );
                 },
