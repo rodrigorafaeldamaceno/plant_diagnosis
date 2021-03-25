@@ -7,7 +7,16 @@ class CameraHelper {
 
   static Future<File> pickImage(
       {ImageSource source: ImageSource.camera}) async {
-    var pickedFile = await _picker.getImage(source: source);
-    return File(pickedFile.path);
+    try {
+      var pickedFile = await _picker.getImage(source: source);
+
+      if (pickedFile == null) return null;
+
+      return File(pickedFile.path);
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return null;
+    }
   }
 }

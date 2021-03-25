@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plant_diagnosis/pages/classified_page.dart';
-import 'package:plant_diagnosis/pages/maps/map_sample.dart';
+import 'package:plant_diagnosis/routes.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -39,12 +38,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MapSample(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, Routes.mapsPage);
                       },
                     ),
                   );
@@ -57,12 +51,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ClassifiedPage(),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.classifiedPage);
         },
       ),
     );

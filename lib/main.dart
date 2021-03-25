@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:plant_diagnosis/routes.dart';
 
 import 'pages/home_page.dart';
 
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'PLant Diagnosis',
       debugShowCheckedModeBanner: false,
+      initialRoute: Routes.home,
+      onGenerateRoute: Routes.generateRoute,
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.teal,
@@ -57,7 +60,6 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.teal,
         ),
       ),
-      home: HomePage(),
     );
   }
 }
