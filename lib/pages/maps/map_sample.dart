@@ -157,7 +157,7 @@ class MapSampleState extends State<MapSample> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height+20,
+              top: AppBar().preferredSize.height + 20,
               right: 8,
             ),
             child: Align(
