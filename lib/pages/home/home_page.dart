@@ -65,12 +65,6 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Column(
             children: [
-              SizedBox(height: 40),
-              Text(
-                'Histórico',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
               StreamBuilder(
                 stream: controller.find(),
                 initialData: <Analyze>[],
@@ -81,15 +75,40 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(),
                     );
 
-                  return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return cardAnalyze(
-                        analyze: snapshot.data[index],
-                      );
-                    },
+                  if (snapshot.data.isEmpty)
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 200),
+                        child: Text(
+                          'Nenhuma análise encontada',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    );
+
+                  final listOfAnalysis = snapshot.data;
+                  listOfAnalysis.reversed;
+
+                  return Column(
+                    children: [
+                      Text(
+                        'Histórico',
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 40),
+                      ListView.builder(
+                        itemCount: listOfAnalysis.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return cardAnalyze(
+                            analyze: listOfAnalysis[index],
+                          );
+                        },
+                      ),
+                    ],
                   );
                 },
               ),

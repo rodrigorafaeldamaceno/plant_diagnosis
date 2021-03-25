@@ -215,7 +215,12 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-                Center(child: Text('Informações sobre o diagnóstico')),
+                Center(
+                  child: Text(
+                    'Informações sobre o diagnóstico',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -308,6 +313,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
                               ),
                               Text(
                                 'Adicione uma imagem para análise',
+                                textAlign: TextAlign.center,
                               ),
                               SizedBox(
                                 height: 20,
