@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:plant_diagnosis/routes.dart';
 
-import 'pages/home_page.dart';
+import 'pages/home/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plant_diagnosis/pages/classified_page.dart';
+import 'package:plant_diagnosis/pages/classified/classified_page.dart';
 import 'package:plant_diagnosis/pages/details/details_diagnosis_page.dart';
-import 'package:plant_diagnosis/pages/home_page.dart';
+import 'package:plant_diagnosis/pages/home/home_page.dart';
 import 'package:plant_diagnosis/pages/maps/map_sample.dart';
 
 class Routes {
