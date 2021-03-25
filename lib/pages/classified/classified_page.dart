@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:plant_diagnosis/db/database.dart';
 import 'package:plant_diagnosis/helpers/camera_helper.dart';
 import 'package:plant_diagnosis/helpers/tflite_helper.dart';
 import 'package:plant_diagnosis/models/examples/examples.dart';
@@ -169,6 +170,35 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
     );
   }
 
+  Future addAnalyze() async {
+    double latitude;
+    double longitude;
+
+    if (controller.saveLocation) {
+      final location = await controller.getCurrentLocation();
+
+      latitude = location?.latitude;
+      longitude = location?.longitude;
+    }
+
+    final analyze = Analyze(
+      imageDir: 'assets/images/image.jpeg',
+      species: 'Morango',
+      description: controller.descriptionController.text,
+      date: DateTime.now(),
+      percentage: controller.outputs.first.confidence,
+      note: controller.obsController.text,
+      result: controller.outputs.first.label,
+      latitude: latitude,
+      longitude: longitude,
+    );
+
+    controller.addAnalyze(analyze);
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
   Future _showSaveDialog() {
     return showDialog(
       context: context,
@@ -224,10 +254,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
                   height: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
+                  onPressed: addAnalyze,
                   child: Text('Salvar'),
                 ),
                 TextButton(

@@ -6,6 +6,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapSample extends StatefulWidget {
+  final LatLng target;
+
+  const MapSample({Key key, @required this.target}) : super(key: key);
+
   @override
   State<MapSample> createState() => MapSampleState();
 }
@@ -15,7 +19,6 @@ class MapSampleState extends State<MapSample> {
   PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   // final _target = LatLng(-25.364099, -54.241467);
-  final _target = LatLng(-25.414276, -54.189365);
 
   Completer<GoogleMapController> _controller = Completer();
   MapType _currentMapType;
@@ -32,8 +35,8 @@ class MapSampleState extends State<MapSample> {
       _createPolylines(
         start: _currentPosition,
         destination: Position(
-          latitude: _target.latitude,
-          longitude: _target.longitude,
+          latitude: widget.target.latitude,
+          longitude: widget.target.longitude,
         ),
       );
     });
@@ -121,7 +124,7 @@ class MapSampleState extends State<MapSample> {
         Marker(
           // This marker id can be anything that uniquely identifies each marker.
           markerId: MarkerId('teste'),
-          position: _target,
+          position: widget.target,
           infoWindow: InfoWindow(
             title: 'Really cool place',
             snippet: '5 Star Rating',
@@ -146,7 +149,7 @@ class MapSampleState extends State<MapSample> {
             myLocationButtonEnabled: true,
             myLocationEnabled: true,
             initialCameraPosition: CameraPosition(
-              target: _target,
+              target: widget.target,
               zoom: 14.4746,
             ),
             markers: _markers,

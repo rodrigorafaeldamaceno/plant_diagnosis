@@ -2,7 +2,8 @@ import 'package:moor_flutter/moor_flutter.dart';
 
 @DataClassName("Analyze")
 class Analysis extends Table {
-  IntColumn get id => integer().autoIncrement()();
+  IntColumn get id => integer().nullable().autoIncrement()();
+  TextColumn get imageDir => text()();
   TextColumn get result => text().nullable()();
   TextColumn get species => text()();
   TextColumn get description => text()();

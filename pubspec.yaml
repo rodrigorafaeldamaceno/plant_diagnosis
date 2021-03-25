@@ -23,6 +23,7 @@ dependencies:
   flutter_polyline_points: ^0.2.6
   path_provider: ^2.0.1
   sqlite3_flutter_libs: ^0.2.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

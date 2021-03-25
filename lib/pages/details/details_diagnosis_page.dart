@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:plant_diagnosis/db/database.dart';
+import 'package:plant_diagnosis/helpers/date_helper.dart';
 import 'package:plant_diagnosis/routes.dart';
 
 class DetailsDiagnosisPage extends StatefulWidget {
+  final Analyze analyze;
+
+  const DetailsDiagnosisPage({Key key, @required this.analyze})
+      : super(key: key);
+
   @override
   _DetailsDiagnosisPageState createState() => _DetailsDiagnosisPageState();
 }
@@ -23,7 +31,7 @@ class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
                 height: MediaQuery.of(context).size.width * 0.5,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/image.jpeg'),
+                    image: AssetImage(widget.analyze.imageDir),
                   ),
                 ),
               ),
@@ -31,13 +39,13 @@ class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
                 height: 10,
               ),
               Text(
-                'Planta com Leaf Scorch - 99,6%',
+                'Planta ${widget.analyze.result} - ${(widget.analyze.percentage * 100).toStringAsFixed(2)}%',
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
               Text(
-                'Analise feita no dia 14/05/1995',
+                'Analise feita no dia: ${DateHelper.getDateDDMMYYYY(widget.analyze.date.toString()) + ' - ' + DateHelper.getHourMinute(widget.analyze.date.toString())}',
                 style: TextStyle(
                   fontSize: 14,
                 ),
@@ -45,17 +53,28 @@ class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
               SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.mapsPage);
-                },
-                child: Text('Ver no mapa'),
+              Visibility(
+                visible: widget.analyze.latitude != null &&
+                    widget.analyze.longitude != null,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.mapsPage,
+                      arguments: LatLng(
+                        widget.analyze.latitude,
+                        widget.analyze.longitude,
+                      ),
+                    );
+                  },
+                  child: Text('Ver no mapa'),
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
               Text(
-                "Observações: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                widget.analyze.note ?? '',
                 textAlign: TextAlign.justify,
               ),
             ],

@@ -17,15 +17,15 @@ class AnalysisDAO extends DatabaseAccessor<MyDatabase> with _$AnalysisDAOMixin {
     return select(analysis).get();
   }
 
-  Future addCategory(Analyze analyze) {
+  Future addAnalyze(Analyze analyze) {
     return into(analysis).insert(analyze).catchError((e) => print(e));
   }
 
-  Future updateCategory(Analyze analyze) {
+  Future updateAnalyze(Analyze analyze) {
     return update(analysis).replace(analyze).catchError((e) => print(e));
   }
 
-  Future removeCategory(int id) {
+  Future removeAnalyze(int id) {
     return (delete(analysis)..where((cat) => cat.id.equals(id)))
         .go()
         .catchError((e) => print(e));

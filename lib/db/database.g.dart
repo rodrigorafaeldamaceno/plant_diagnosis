@@ -9,6 +9,7 @@ part of 'database.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Analyze extends DataClass implements Insertable<Analyze> {
   final int id;
+  final String imageDir;
   final String result;
   final String species;
   final String description;
@@ -18,7 +19,8 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   final double longitude;
   final double percentage;
   Analyze(
-      {@required this.id,
+      {this.id,
+      @required this.imageDir,
       this.result,
       @required this.species,
       @required this.description,
@@ -36,6 +38,8 @@ class Analyze extends DataClass implements Insertable<Analyze> {
     final doubleType = db.typeSystem.forDartType<double>();
     return Analyze(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      imageDir: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}image_dir']),
       result:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}result']),
       species:
@@ -58,6 +62,9 @@ class Analyze extends DataClass implements Insertable<Analyze> {
     final map = <String, Expression>{};
     if (!nullToAbsent || id != null) {
       map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || imageDir != null) {
+      map['image_dir'] = Variable<String>(imageDir);
     }
     if (!nullToAbsent || result != null) {
       map['result'] = Variable<String>(result);
@@ -89,6 +96,9 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   AnalysisCompanion toCompanion(bool nullToAbsent) {
     return AnalysisCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      imageDir: imageDir == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageDir),
       result:
           result == null && nullToAbsent ? const Value.absent() : Value(result),
       species: species == null && nullToAbsent
@@ -116,6 +126,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Analyze(
       id: serializer.fromJson<int>(json['id']),
+      imageDir: serializer.fromJson<String>(json['imageDir']),
       result: serializer.fromJson<String>(json['result']),
       species: serializer.fromJson<String>(json['species']),
       description: serializer.fromJson<String>(json['description']),
@@ -131,6 +142,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'imageDir': serializer.toJson<String>(imageDir),
       'result': serializer.toJson<String>(result),
       'species': serializer.toJson<String>(species),
       'description': serializer.toJson<String>(description),
@@ -144,6 +156,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
 
   Analyze copyWith(
           {int id,
+          String imageDir,
           String result,
           String species,
           String description,
@@ -154,6 +167,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
           double percentage}) =>
       Analyze(
         id: id ?? this.id,
+        imageDir: imageDir ?? this.imageDir,
         result: result ?? this.result,
         species: species ?? this.species,
         description: description ?? this.description,
@@ -167,6 +181,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   String toString() {
     return (StringBuffer('Analyze(')
           ..write('id: $id, ')
+          ..write('imageDir: $imageDir, ')
           ..write('result: $result, ')
           ..write('species: $species, ')
           ..write('description: $description, ')
@@ -183,24 +198,27 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
       $mrjc(
-          result.hashCode,
+          imageDir.hashCode,
           $mrjc(
-              species.hashCode,
+              result.hashCode,
               $mrjc(
-                  description.hashCode,
+                  species.hashCode,
                   $mrjc(
-                      date.hashCode,
+                      description.hashCode,
                       $mrjc(
-                          note.hashCode,
+                          date.hashCode,
                           $mrjc(
-                              latitude.hashCode,
-                              $mrjc(longitude.hashCode,
-                                  percentage.hashCode)))))))));
+                              note.hashCode,
+                              $mrjc(
+                                  latitude.hashCode,
+                                  $mrjc(longitude.hashCode,
+                                      percentage.hashCode))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Analyze &&
           other.id == this.id &&
+          other.imageDir == this.imageDir &&
           other.result == this.result &&
           other.species == this.species &&
           other.description == this.description &&
@@ -213,6 +231,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
 
 class AnalysisCompanion extends UpdateCompanion<Analyze> {
   final Value<int> id;
+  final Value<String> imageDir;
   final Value<String> result;
   final Value<String> species;
   final Value<String> description;
@@ -223,6 +242,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
   final Value<double> percentage;
   const AnalysisCompanion({
     this.id = const Value.absent(),
+    this.imageDir = const Value.absent(),
     this.result = const Value.absent(),
     this.species = const Value.absent(),
     this.description = const Value.absent(),
@@ -234,6 +254,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
   });
   AnalysisCompanion.insert({
     this.id = const Value.absent(),
+    @required String imageDir,
     this.result = const Value.absent(),
     @required String species,
     @required String description,
@@ -242,12 +263,14 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
     this.latitude = const Value.absent(),
     this.longitude = const Value.absent(),
     @required double percentage,
-  })  : species = Value(species),
+  })  : imageDir = Value(imageDir),
+        species = Value(species),
         description = Value(description),
         date = Value(date),
         percentage = Value(percentage);
   static Insertable<Analyze> custom({
     Expression<int> id,
+    Expression<String> imageDir,
     Expression<String> result,
     Expression<String> species,
     Expression<String> description,
@@ -259,6 +282,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (imageDir != null) 'image_dir': imageDir,
       if (result != null) 'result': result,
       if (species != null) 'species': species,
       if (description != null) 'description': description,
@@ -272,6 +296,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
 
   AnalysisCompanion copyWith(
       {Value<int> id,
+      Value<String> imageDir,
       Value<String> result,
       Value<String> species,
       Value<String> description,
@@ -282,6 +307,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
       Value<double> percentage}) {
     return AnalysisCompanion(
       id: id ?? this.id,
+      imageDir: imageDir ?? this.imageDir,
       result: result ?? this.result,
       species: species ?? this.species,
       description: description ?? this.description,
@@ -298,6 +324,9 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (imageDir.present) {
+      map['image_dir'] = Variable<String>(imageDir.value);
     }
     if (result.present) {
       map['result'] = Variable<String>(result.value);
@@ -330,6 +359,7 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
   String toString() {
     return (StringBuffer('AnalysisCompanion(')
           ..write('id: $id, ')
+          ..write('imageDir: $imageDir, ')
           ..write('result: $result, ')
           ..write('species: $species, ')
           ..write('description: $description, ')
@@ -352,8 +382,20 @@ class $AnalysisTable extends Analysis with TableInfo<$AnalysisTable, Analyze> {
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
   GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
+    return GeneratedIntColumn('id', $tableName, true,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _imageDirMeta = const VerificationMeta('imageDir');
+  GeneratedTextColumn _imageDir;
+  @override
+  GeneratedTextColumn get imageDir => _imageDir ??= _constructImageDir();
+  GeneratedTextColumn _constructImageDir() {
+    return GeneratedTextColumn(
+      'image_dir',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _resultMeta = const VerificationMeta('result');
@@ -457,6 +499,7 @@ class $AnalysisTable extends Analysis with TableInfo<$AnalysisTable, Analyze> {
   @override
   List<GeneratedColumn> get $columns => [
         id,
+        imageDir,
         result,
         species,
         description,
@@ -479,6 +522,12 @@ class $AnalysisTable extends Analysis with TableInfo<$AnalysisTable, Analyze> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('image_dir')) {
+      context.handle(_imageDirMeta,
+          imageDir.isAcceptableOrUnknown(data['image_dir'], _imageDirMeta));
+    } else if (isInserting) {
+      context.missing(_imageDirMeta);
     }
     if (data.containsKey('result')) {
       context.handle(_resultMeta,

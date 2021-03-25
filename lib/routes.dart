@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:plant_diagnosis/db/database.dart';
 import 'package:plant_diagnosis/pages/classified/classified_page.dart';
 import 'package:plant_diagnosis/pages/details/details_diagnosis_page.dart';
 import 'package:plant_diagnosis/pages/home/home_page.dart';
@@ -32,10 +34,18 @@ class Routes {
         return MaterialPageRoute(builder: (_) => ClassifiedPage());
         break;
       case detailsDiagnosis:
-        return MaterialPageRoute(builder: (_) => DetailsDiagnosisPage());
+        return MaterialPageRoute(
+          builder: (_) => DetailsDiagnosisPage(
+            analyze: args as Analyze,
+          ),
+        );
         break;
       case mapsPage:
-        return MaterialPageRoute(builder: (_) => MapSample());
+        return MaterialPageRoute(
+          builder: (_) => MapSample(
+            target: args as LatLng,
+          ),
+        );
         break;
 
       default:
