@@ -28,17 +28,17 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                      title: Text('Descriçao ${index + 1}'),
+                      title: Text('Descrição da análise'),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Diagnóstico'),
+                          Text('Descrição da planta'),
                           Text('14/05/1995'),
                         ],
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.mapsPage);
+                        Navigator.pushNamed(context, Routes.detailsDiagnosis);
                       },
                     ),
                   );

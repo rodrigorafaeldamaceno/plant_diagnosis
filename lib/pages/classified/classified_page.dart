@@ -41,7 +41,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.white,
-              width: 1,
+              width: 0.3,
             ),
             borderRadius: BorderRadius.circular(12),
           ),
@@ -85,14 +85,14 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
 
   _buildResult() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
       child: Container(
-        height: 100.0,
+        // height: 100.0,
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.white,
-            width: 1,
-          ),
+          // border: Border.all(
+          //   color: Colors.white,
+          //   width: 1,
+          // ),
           borderRadius: BorderRadius.circular(12),
         ),
         child: _buildResultList(),
