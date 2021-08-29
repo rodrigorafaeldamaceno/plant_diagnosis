@@ -44,6 +44,8 @@ flutter:
   assets:
     - assets/strawberries/labels.txt
     - assets/strawberries/model_unquant.tflite
+    - assets/all/labels.txt
+    - assets/all/model_unquant.tflite
 
     - assets/images/image.jpeg
 

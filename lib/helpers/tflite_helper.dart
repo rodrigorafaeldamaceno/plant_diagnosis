@@ -52,4 +52,22 @@ class TFLiteHelper {
       return null;
     }
   }
+
+  static Future<List<TFLiteResult>?> classifyImages(List<File> images) async {
+    try {
+      List<TFLiteResult> outputs = [];
+
+      for (var image in images) {
+        final result = await classifyImage(image);
+
+        if (result == null) return [];
+
+        outputs.addAll(result);
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return null;
+    }
+  }
 }
