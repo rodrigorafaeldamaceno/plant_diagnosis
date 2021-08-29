@@ -9,8 +9,7 @@ import 'package:plant_diagnosis/routes.dart';
 class DetailsDiagnosisPage extends StatefulWidget {
   final Analyze analyze;
 
-  const DetailsDiagnosisPage({Key key, @required this.analyze})
-      : super(key: key);
+  DetailsDiagnosisPage({Key? key, required this.analyze}) : super(key: key);
 
   @override
   _DetailsDiagnosisPageState createState() => _DetailsDiagnosisPageState();
@@ -66,8 +65,8 @@ class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
                       context,
                       Routes.mapsPage,
                       arguments: LatLng(
-                        widget.analyze.latitude,
-                        widget.analyze.longitude,
+                        widget.analyze.latitude ?? 0,
+                        widget.analyze.longitude ?? 0,
                       ),
                     );
                   },

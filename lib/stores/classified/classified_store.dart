@@ -20,7 +20,7 @@ abstract class _ClassifiedStoreBase with Store {
   bool saveLocation = true;
 
   @observable
-  File image;
+  File? image;
 
   @observable
   ObservableList<TFLiteResult> outputs = ObservableList();
@@ -41,7 +41,7 @@ abstract class _ClassifiedStoreBase with Store {
   }
 
   @action
-  Future pickImage({ImageSource source}) async {
+  Future pickImage({required ImageSource source}) async {
     final imageTemp = await CameraHelper.pickImage(source: source);
     if (imageTemp == null) return;
 
@@ -50,7 +50,7 @@ abstract class _ClassifiedStoreBase with Store {
     image = imageTemp;
 
     outputs.clear();
-    outputs.addAll(outputsTemp);
+    outputs.addAll(outputsTemp!);
 
     print(outputs);
   }

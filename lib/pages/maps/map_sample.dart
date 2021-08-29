@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class MapSample extends StatefulWidget {
   final LatLng target;
 
-  const MapSample({Key key, @required this.target}) : super(key: key);
+  MapSample({Key? key, required this.target}) : super(key: key);
 
   @override
   State<MapSample> createState() => MapSampleState();
@@ -16,13 +16,13 @@ class MapSample extends StatefulWidget {
 
 class MapSampleState extends State<MapSample> {
   List<LatLng> polylineCoordinates = [];
-  PolylinePoints polylinePoints;
+  PolylinePoints? polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   // final _target = LatLng(-25.364099, -54.241467);
 
   Completer<GoogleMapController> _controller = Completer();
-  MapType _currentMapType;
-  Position _currentPosition;
+  MapType? _currentMapType;
+  Position? _currentPosition;
   final Set<Marker> _markers = {};
 
   @override
@@ -30,16 +30,24 @@ class MapSampleState extends State<MapSample> {
     super.initState();
 
     _currentMapType = MapType.hybrid;
-
-    _getCurrentLocation().then((value) {
-      _createPolylines(
-        start: _currentPosition,
-        destination: Position(
-          latitude: widget.target.latitude,
-          longitude: widget.target.longitude,
-        ),
-      );
-    });
+    if (_currentPosition != null)
+      _getCurrentLocation().then((value) {
+        _createPolylines(
+          start: _currentPosition!,
+          destination: Position(
+            latitude: widget.target.latitude,
+            longitude: widget.target.longitude,
+            accuracy: 1,
+            altitude: 1,
+            heading: 1,
+            speed: 1,
+            speedAccuracy: 1,
+            timestamp: DateTime.now(),
+            floor: 1,
+            isMocked: true,
+          ),
+        );
+      });
     _onAddMarkerButtonPressed();
   }
 
@@ -63,7 +71,7 @@ class MapSampleState extends State<MapSample> {
 // Create the polylines for showing the route between two places
 
   _createPolylines(
-      {@required Position start, @required Position destination}) async {
+      {required Position start, required Position destination}) async {
     // Initializing PolylinePoints
     polylinePoints = PolylinePoints();
 
@@ -72,10 +80,10 @@ class MapSampleState extends State<MapSample> {
       // drawing the polylines
       final otherKey = 'YOUR-API-KEY';
 
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      final result = await polylinePoints!.getRouteBetweenCoordinates(
         otherKey,
-        PointLatLng(start?.latitude, start?.longitude),
-        PointLatLng(destination?.latitude, destination?.longitude),
+        PointLatLng(start.latitude, start.longitude),
+        PointLatLng(destination.latitude, destination.longitude),
         travelMode: TravelMode.driving,
       );
 
@@ -144,7 +152,7 @@ class MapSampleState extends State<MapSample> {
       body: Stack(
         children: [
           GoogleMap(
-            mapType: _currentMapType,
+            mapType: _currentMapType ?? MapType.normal,
             myLocationButtonEnabled: true,
             myLocationEnabled: true,
             initialCameraPosition: CameraPosition(

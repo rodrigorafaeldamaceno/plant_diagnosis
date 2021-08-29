@@ -26,7 +26,7 @@ class MyDatabase extends _$MyDatabase {
     analysisDAO = AnalysisDAO(this);
   }
 
-  AnalysisDAO analysisDAO;
+  late AnalysisDAO analysisDAO;
   // ProductDAO productDAO;
 
   // you should bump this number whenever you change or add a table definition. Migrations

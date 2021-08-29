@@ -3,13 +3,13 @@ class TFLiteResult {
   int index;
   String label;
 
-  TFLiteResult({this.confidence, this.index, this.label});
+  TFLiteResult(
+      {required this.confidence, required this.index, required this.label});
 
-  TFLiteResult.fromJson(dynamic json) {
-    confidence = json['confidence'];
-    index = json['index'];
-    label = json['label'];
-  }
+  TFLiteResult.fromJson(dynamic json)
+      : confidence = json['confidence'],
+        index = json['index'],
+        label = json['label'];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  Widget cardAnalyze({@required Analyze analyze}) {
+  Widget cardAnalyze({required Analyze analyze}) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       secondaryActions: <Widget>[
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.red,
           icon: MdiIcons.delete,
           onTap: () {
-            controller.removeAnalyze(analyze.id);
+            controller.removeAnalyze(analyze.id!);
           },
         ),
       ],
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(),
                     );
 
-                  if (snapshot.data.isEmpty)
+                  if (snapshot.data!.isEmpty)
                     return Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 200),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                     );
 
                   final listOfAnalysis = snapshot.data;
-                  listOfAnalysis.reversed;
+                  listOfAnalysis!.reversed;
 
                   return Column(
                     children: [

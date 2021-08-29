@@ -16,37 +16,31 @@ class Routes {
   static const String detailsDiagnosis = '/details_diagnosis';
   static const String mapsPage = '/maps_page';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     print(args);
     switch (settings.name) {
       case login:
         return MaterialPageRoute(builder: (_) => Container());
-        break;
       case recoveryPassword:
         return MaterialPageRoute(builder: (_) => Container());
-        break;
       case home:
         return MaterialPageRoute(builder: (_) => HomePage());
-        break;
       case classifiedPage:
         return MaterialPageRoute(builder: (_) => ClassifiedPage());
-        break;
       case detailsDiagnosis:
         return MaterialPageRoute(
           builder: (_) => DetailsDiagnosisPage(
             analyze: args as Analyze,
           ),
         );
-        break;
       case mapsPage:
         return MaterialPageRoute(
           builder: (_) => MapSample(
             target: args as LatLng,
           ),
         );
-        break;
 
       default:
         _errorRoute();

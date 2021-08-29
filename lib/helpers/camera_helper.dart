@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 class CameraHelper {
   static final _picker = ImagePicker();
 
-  static Future<File> pickImage(
+  static Future<File?> pickImage(
       {ImageSource source: ImageSource.camera}) async {
     try {
       var pickedFile = await _picker.getImage(source: source);

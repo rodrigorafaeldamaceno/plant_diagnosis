@@ -7,9 +7,7 @@ class Examples {
   final Types type;
 
   Examples(
-      {@required this.description,
-      @required this.location,
-      @required this.type});
+      {required this.description, required this.location, required this.type});
 }
 
 final listOfExamples = [

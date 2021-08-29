@@ -13,7 +13,7 @@ import 'package:plant_diagnosis/models/tflite_result.dart';
 import 'package:plant_diagnosis/stores/classified/classified_store.dart';
 
 class ClassifiedPage extends StatefulWidget {
-  const ClassifiedPage({Key key}) : super(key: key);
+  ClassifiedPage({Key? key}) : super(key: key);
 
   @override
   _ClassifiedPageState createState() => _ClassifiedPageState();
@@ -54,7 +54,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
                   : Stack(
                       children: [
                         Image.file(
-                          controller.image,
+                          controller.image!,
                           fit: BoxFit.cover,
                         ),
                         Positioned(
@@ -172,17 +172,17 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
   }
 
   Future addAnalyze() async {
-    double latitude;
-    double longitude;
+    double? latitude;
+    double? longitude;
 
     if (controller.saveLocation) {
       final location = await controller.getCurrentLocation();
 
-      latitude = location?.latitude;
-      longitude = location?.longitude;
+      latitude = location.latitude;
+      longitude = location.longitude;
     }
 
-    final imageDir = await FileHelper.saveFile(controller.image);
+    final imageDir = await FileHelper.saveFile(controller.image!);
 
     print(imageDir.path);
 

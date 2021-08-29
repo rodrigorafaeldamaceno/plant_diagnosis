@@ -17,12 +17,12 @@ class TFLiteHelper {
     Tflite.close();
   }
 
-  static Future<List<TFLiteResult>> classifyImage(File image) async {
+  static Future<List<TFLiteResult>?> classifyImage(File image) async {
     try {
       List<TFLiteResult> outputs = [];
 
       final output = await Tflite.runModelOnImage(
-        path: image?.path,
+        path: image.path,
         imageMean: 0.0,
         imageStd: 255.0,
         numResults: 2,
@@ -30,7 +30,7 @@ class TFLiteHelper {
         asynch: true,
       );
 
-      final element = TFLiteResult.fromJson(output.first);
+      final element = TFLiteResult.fromJson(output!.first);
 
       print(element.toJson());
 

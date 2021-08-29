@@ -27,13 +27,13 @@ mixin _$ClassifiedStore on _ClassifiedStoreBase, Store {
   final _$imageAtom = Atom(name: '_ClassifiedStoreBase.image');
 
   @override
-  File get image {
+  File? get image {
     _$imageAtom.reportRead();
     return super.image;
   }
 
   @override
-  set image(File value) {
+  set image(File? value) {
     _$imageAtom.reportWrite(value, super.image, () {
       super.image = value;
     });
@@ -57,7 +57,7 @@ mixin _$ClassifiedStore on _ClassifiedStoreBase, Store {
   final _$pickImageAsyncAction = AsyncAction('_ClassifiedStoreBase.pickImage');
 
   @override
-  Future<dynamic> pickImage({ImageSource source}) {
+  Future<dynamic> pickImage({required ImageSource source}) {
     return _$pickImageAsyncAction.run(() => super.pickImage(source: source));
   }
 
