@@ -18,7 +18,7 @@ class DetailsDiagnosisPage extends StatefulWidget {
 }
 
 class _DetailsDiagnosisPageState extends State<DetailsDiagnosisPage> {
-  openMapsSheet() async {
+  Future<void> openMapsSheet() async {
     try {
       final coords =
           Coords(widget.analyze.latitude!, widget.analyze.longitude!);

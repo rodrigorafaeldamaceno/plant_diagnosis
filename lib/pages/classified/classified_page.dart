@@ -34,7 +34,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
     TFLiteHelper.loadModel(listOfExamples.first);
   }
 
-  _buildImage() {
+  Widget _buildImage() {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 92.0),
@@ -85,7 +85,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
     );
   }
 
-  _buildResult() {
+  Widget _buildResult() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
       child: Container(
@@ -102,7 +102,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
     );
   }
 
-  _buildResultList() {
+  Widget _buildResultList() {
     return Observer(
       builder: (_) {
         return controller.outputs.isEmpty

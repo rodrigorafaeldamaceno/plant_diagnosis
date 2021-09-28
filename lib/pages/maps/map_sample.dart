@@ -70,7 +70,7 @@ class MapSampleState extends State<MapSample> {
 
 // Create the polylines for showing the route between two places
 
-  _createPolylines(
+  void _createPolylines(
       {required Position start, required Position destination}) async {
     // Initializing PolylinePoints
     polylinePoints = PolylinePoints();
