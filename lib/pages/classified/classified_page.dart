@@ -110,15 +110,16 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
                 child: Text('Without results'),
               )
             : Center(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: controller.outputs.length,
                   shrinkWrap: true,
+                  separatorBuilder: (context, index) => SizedBox(height: 4),
                   padding: const EdgeInsets.all(20.0),
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       children: <Widget>[
                         Text(
-                          '${controller.outputs[index].label} ( ${(controller.outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
+                          '${controller.getSpecieName(defaultName: controller.outputs[index].label)} ( ${(controller.outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         SizedBox(

@@ -78,7 +78,7 @@ class MapSampleState extends State<MapSample> {
     try {
       // Generating the list of coordinates to be used for
       // drawing the polylines
-      final otherKey = 'YOUR-API-KEY';
+      final otherKey = 'AIzaSyCWVPhS-67QkgwyuJ1ZNtbJmxlX8LHBrec';
 
       final result = await polylinePoints!.getRouteBetweenCoordinates(
         otherKey,

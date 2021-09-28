@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(analyze.species),
+              Text(analyze.species.substring(3)),
               Text(DateHelper.getDateDDMMYYYY(analyze.date.toString()) +
                   ' - ' +
                   DateHelper.getHourMinute(analyze.date.toString())),
