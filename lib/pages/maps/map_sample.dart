@@ -30,7 +30,7 @@ class MapSampleState extends State<MapSample> {
     super.initState();
 
     _currentMapType = MapType.hybrid;
-    if (_currentPosition != null)
+    if (_currentPosition != null) {
       _getCurrentLocation().then((value) {
         _createPolylines(
           start: _currentPosition!,
@@ -48,6 +48,7 @@ class MapSampleState extends State<MapSample> {
           ),
         );
       });
+    }
     _onAddMarkerButtonPressed();
   }
 

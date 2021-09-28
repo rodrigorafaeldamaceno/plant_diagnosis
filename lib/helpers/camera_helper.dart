@@ -10,7 +10,9 @@ class CameraHelper {
     try {
       var pickedFile = await _picker.pickImage(source: source);
 
-      if (pickedFile == null) return null;
+      if (pickedFile == null) {
+        return null;
+      }
 
       return File(pickedFile.path);
     } catch (e, s) {
@@ -23,7 +25,9 @@ class CameraHelper {
   static Future<List<File>>? pickImages() async {
     try {
       var pickedFiles = await _picker.pickMultiImage();
-      if (pickedFiles == null) return [];
+      if (pickedFiles == null) {
+        return [];
+      }
 
       final files = pickedFiles.map((e) => File(e.path)).toList();
 

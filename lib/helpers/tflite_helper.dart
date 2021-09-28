@@ -60,7 +60,9 @@ class TFLiteHelper {
       for (var image in images) {
         final result = await classifyImage(image);
 
-        if (result == null) return [];
+        if (result == null) {
+          return [];
+        }
 
         outputs.addAll(result);
       }

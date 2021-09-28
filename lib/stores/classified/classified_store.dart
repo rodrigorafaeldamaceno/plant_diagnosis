@@ -81,7 +81,9 @@ abstract class _ClassifiedStoreBase with Store {
   @action
   Future pickImage({required ImageSource source}) async {
     final imageTemp = await CameraHelper.pickImage(source: source);
-    if (imageTemp == null) return;
+    if (imageTemp == null) {
+      return;
+    }
 
     final outputsTemp = await TFLiteHelper.classifyImage(imageTemp);
 
