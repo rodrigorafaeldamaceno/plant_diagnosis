@@ -28,49 +28,13 @@ abstract class _ClassifiedStoreBase with Store {
   final descriptionController = TextEditingController();
   final obsController = TextEditingController();
 
-  String getSpecieName({required String defaultName}) {
-    return getDiseaseName(
-      defaultName: defaultName
-          .replaceAll('Apple___', 'Maçã: ')
-          .replaceAll('Potato___', 'Batata: ')
-          .replaceAll('Tomato___', 'Tomate: ')
-          .replaceAll('Corn___', 'Milho: ')
-          .replaceAll('Grape___', 'Uva: '),
-    );
-  }
-
-  String getDiseaseName({required String defaultName}) {
-    return defaultName
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('Apple_scab', 'Crosta de maçã')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável')
-        .replaceAll('healthy', 'Saudável');
-
-    // return label;
-  }
-
   Stream<List<Analyze>> find() {
     return _dao.find();
   }
 
   Future addAnalyze(Analyze analyze) {
     return _dao.addAnalyze(
-      analyze.copyWith(
-        species: getSpecieName(defaultName: analyze.result ?? ''),
-      ),
+      analyze.copyWith(species: analyze.result),
     );
   }
 

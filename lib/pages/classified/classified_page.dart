@@ -119,7 +119,7 @@ class _ClassifiedPageState extends State<ClassifiedPage> {
                     return Column(
                       children: <Widget>[
                         Text(
-                          '${controller.getSpecieName(defaultName: controller.outputs[index].label)} ( ${(controller.outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
+                          '${controller.outputs[index].label} ( ${(controller.outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
