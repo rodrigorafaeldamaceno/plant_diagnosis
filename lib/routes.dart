@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plant_diagnosis/db/database.dart';
 import 'package:plant_diagnosis/pages/classified/classified_page.dart';
 import 'package:plant_diagnosis/pages/details/details_diagnosis_page.dart';
@@ -35,12 +34,12 @@ class Routes {
             analyze: args as Analyze,
           ),
         );
-      case mapsPage:
-        return MaterialPageRoute(
-          builder: (_) => MapSample(
-            target: args as LatLng,
-          ),
-        );
+      // case mapsPage:
+      //   return MaterialPageRoute(
+      //     builder: (_) => MapSample(
+      //       target: args as LatLng,
+      //     ),
+      //   );
 
       default:
         _errorRoute();
