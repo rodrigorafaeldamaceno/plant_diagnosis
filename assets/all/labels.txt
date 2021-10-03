@@ -1,12 +1,12 @@
 0 Tomate: Mancha bacteriana
-1 Tomate - Pinta-preta
+1 Tomate: Pinta-preta
 2 Tomate: Saúdavel
-3 Tomate - Morte tardia
-4 Tomate - Molde de folha
+3 Tomate: Morte tardia
+4 Tomate: Molde de folha
 5 Tomate: Septoria Leaf Spot
 6 Tomate: Ácaros de aranha
 7 Tomate: Mancha alvo
-8 Tomate - Vírus do mosaico
+8 Tomate: Vírus do mosaico
 9 Tomate: Tomate_Ye...
 10 Milho: Mancha de folha Cercospora
 11 Milho: Ferrugem comum
@@ -16,9 +16,9 @@
 15 Maça: Podridão negra
 16 Maçã: Ferrugem da maçã do cedro
 17 Maçã: Saúdavel
-18 Batata - Doença precoce
+18 Batata: Doença precoce
 19 Batata: Saúdavel
-20 Batata - Doença tardia
+20 Batata: Doença tardia
 21 Uva: Sarampo negro
 22 Uva: Saúdavel
 23 Uva: Ferrrugem das folhas
