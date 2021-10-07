@@ -73,12 +73,12 @@ class _HomePageState extends State<HomePage> {
                 initialData: <Analyze>[],
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Analyze>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-
-                  if (snapshot.data!.isEmpty)
+                  }
+                  if (snapshot.data!.isEmpty) {
                     return Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 200),
@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     );
+                  }
 
                   final listOfAnalysis = snapshot.data;
                   listOfAnalysis!.reversed;
