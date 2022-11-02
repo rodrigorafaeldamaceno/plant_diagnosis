@@ -1,11 +1,11 @@
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:drift/drift.dart';
 import 'package:plant_diagnosis/db/tables/analysis_table.dart';
 
 import '../database.dart';
 
 part 'analysis_dao.g.dart';
 
-@UseDao(tables: [Analysis])
+@DriftAccessor(tables: [Analysis])
 class AnalysisDAO extends DatabaseAccessor<MyDatabase> with _$AnalysisDAOMixin {
   AnalysisDAO(MyDatabase db) : super(db);
 

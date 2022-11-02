@@ -1,24 +1,27 @@
 import 'dart:io';
 
-import 'package:moor/moor.dart';
-import 'package:moor/ffi.dart';
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:plant_diagnosis/db/daos/analysis_dao.dart';
 import 'package:plant_diagnosis/db/tables/analysis_table.dart';
+import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(path.join(dbFolder.path, 'db.sqlite'));
-    return VmDatabase(file);
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    return NativeDatabase(
+      file,
+      logStatements: true,
+    );
   });
 }
 
-@UseMoor(tables: [Analysis])
+@DriftDatabase(tables: [Analysis], daos: [AnalysisDAO])
 class MyDatabase extends _$MyDatabase {
   static MyDatabase instance = MyDatabase._internal();
 
@@ -32,7 +35,7 @@ class MyDatabase extends _$MyDatabase {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 1;
 
   @override
   MigrationStrategy get migration {
@@ -46,8 +49,6 @@ class MyDatabase extends _$MyDatabase {
       onUpgrade: (Migrator m, int from, int to) async {
         print('old version: $from');
         print('to version: $to');
-
-        await m.addColumn(analysis, analysis.imageDir);
       },
     );
   }

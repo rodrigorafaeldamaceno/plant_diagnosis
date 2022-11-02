@@ -16,11 +16,9 @@ dependencies:
   tflite: ^1.1.2
   percent_indicator: ^3.0.1
   image_picker: ^0.8.4+2
-  moor_flutter: ^4.0.0
-  flutter_mobx: ^2.0.2
-  # google_maps_flutter: ^2.0.10
+  drift: ^2.1.0
+  flutter_mobx: ^2.0.6+4
   geolocator: ^7.5.0
-  # flutter_polyline_points: ^1.0.0
   path_provider: ^2.0.2
   sqlite3_flutter_libs: ^0.5.0
   intl: ^0.17.0
@@ -34,12 +32,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  moor_generator:
-  mobx_codegen:
-  build_runner:
+  drift_dev: ^2.1.0
+  mobx_codegen: ^2.0.7+3
+  build_runner: ^2.3.2
 
 dependencies_overrides:
-  # mobx_codegen: ^2.0.0-nullsafety.2
+  analyzer: ^5.2.0
 
 flutter:
   uses-material-design: true

@@ -3,10 +3,10 @@
 part of 'database.dart';
 
 // **************************************************************************
-// MoorGenerator
+// DriftDatabaseGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class Analyze extends DataClass implements Insertable<Analyze> {
   final int? id;
   final String imageDir;
@@ -18,7 +18,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   final double? latitude;
   final double? longitude;
   final double percentage;
-  Analyze(
+  const Analyze(
       {this.id,
       required this.imageDir,
       this.result,
@@ -29,52 +29,27 @@ class Analyze extends DataClass implements Insertable<Analyze> {
       this.latitude,
       this.longitude,
       required this.percentage});
-  factory Analyze.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return Analyze(
-      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      imageDir: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}image_dir'])!,
-      result: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}result']),
-      species: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}species'])!,
-      description: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
-      date: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
-      note: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}note']),
-      latitude: const RealType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}latitude']),
-      longitude: const RealType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}longitude']),
-      percentage: const RealType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}percentage'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int?>(id);
+      map['id'] = Variable<int>(id);
     }
     map['image_dir'] = Variable<String>(imageDir);
     if (!nullToAbsent || result != null) {
-      map['result'] = Variable<String?>(result);
+      map['result'] = Variable<String>(result);
     }
     map['species'] = Variable<String>(species);
     map['description'] = Variable<String>(description);
     map['date'] = Variable<DateTime>(date);
     if (!nullToAbsent || note != null) {
-      map['note'] = Variable<String?>(note);
+      map['note'] = Variable<String>(note);
     }
     if (!nullToAbsent || latitude != null) {
-      map['latitude'] = Variable<double?>(latitude);
+      map['latitude'] = Variable<double>(latitude);
     }
     if (!nullToAbsent || longitude != null) {
-      map['longitude'] = Variable<double?>(longitude);
+      map['longitude'] = Variable<double>(longitude);
     }
     map['percentage'] = Variable<double>(percentage);
     return map;
@@ -102,7 +77,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
 
   factory Analyze.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Analyze(
       id: serializer.fromJson<int?>(json['id']),
       imageDir: serializer.fromJson<String>(json['imageDir']),
@@ -118,7 +93,7 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int?>(id),
       'imageDir': serializer.toJson<String>(imageDir),
@@ -134,26 +109,26 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   }
 
   Analyze copyWith(
-          {int? id,
+          {Value<int?> id = const Value.absent(),
           String? imageDir,
-          String? result,
+          Value<String?> result = const Value.absent(),
           String? species,
           String? description,
           DateTime? date,
-          String? note,
-          double? latitude,
-          double? longitude,
+          Value<String?> note = const Value.absent(),
+          Value<double?> latitude = const Value.absent(),
+          Value<double?> longitude = const Value.absent(),
           double? percentage}) =>
       Analyze(
-        id: id ?? this.id,
+        id: id.present ? id.value : this.id,
         imageDir: imageDir ?? this.imageDir,
-        result: result ?? this.result,
+        result: result.present ? result.value : this.result,
         species: species ?? this.species,
         description: description ?? this.description,
         date: date ?? this.date,
-        note: note ?? this.note,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
+        note: note.present ? note.value : this.note,
+        latitude: latitude.present ? latitude.value : this.latitude,
+        longitude: longitude.present ? longitude.value : this.longitude,
         percentage: percentage ?? this.percentage,
       );
   @override
@@ -174,24 +149,8 @@ class Analyze extends DataClass implements Insertable<Analyze> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          imageDir.hashCode,
-          $mrjc(
-              result.hashCode,
-              $mrjc(
-                  species.hashCode,
-                  $mrjc(
-                      description.hashCode,
-                      $mrjc(
-                          date.hashCode,
-                          $mrjc(
-                              note.hashCode,
-                              $mrjc(
-                                  latitude.hashCode,
-                                  $mrjc(longitude.hashCode,
-                                      percentage.hashCode))))))))));
+  int get hashCode => Object.hash(id, imageDir, result, species, description,
+      date, note, latitude, longitude, percentage);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -248,15 +207,15 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
         date = Value(date),
         percentage = Value(percentage);
   static Insertable<Analyze> custom({
-    Expression<int?>? id,
+    Expression<int>? id,
     Expression<String>? imageDir,
-    Expression<String?>? result,
+    Expression<String>? result,
     Expression<String>? species,
     Expression<String>? description,
     Expression<DateTime>? date,
-    Expression<String?>? note,
-    Expression<double?>? latitude,
-    Expression<double?>? longitude,
+    Expression<String>? note,
+    Expression<double>? latitude,
+    Expression<double>? longitude,
     Expression<double>? percentage,
   }) {
     return RawValuesInsertable({
@@ -302,13 +261,13 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int?>(id.value);
+      map['id'] = Variable<int>(id.value);
     }
     if (imageDir.present) {
       map['image_dir'] = Variable<String>(imageDir.value);
     }
     if (result.present) {
-      map['result'] = Variable<String?>(result.value);
+      map['result'] = Variable<String>(result.value);
     }
     if (species.present) {
       map['species'] = Variable<String>(species.value);
@@ -320,13 +279,13 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
       map['date'] = Variable<DateTime>(date.value);
     }
     if (note.present) {
-      map['note'] = Variable<String?>(note.value);
+      map['note'] = Variable<String>(note.value);
     }
     if (latitude.present) {
-      map['latitude'] = Variable<double?>(latitude.value);
+      map['latitude'] = Variable<double>(latitude.value);
     }
     if (longitude.present) {
-      map['longitude'] = Variable<double?>(longitude.value);
+      map['longitude'] = Variable<double>(longitude.value);
     }
     if (percentage.present) {
       map['percentage'] = Variable<double>(percentage.value);
@@ -353,52 +312,63 @@ class AnalysisCompanion extends UpdateCompanion<Analyze> {
 }
 
 class $AnalysisTable extends Analysis with TableInfo<$AnalysisTable, Analyze> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AnalysisTable(this._db, [this._alias]);
+  $AnalysisTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, true,
-      typeName: 'INTEGER',
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _imageDirMeta = const VerificationMeta('imageDir');
-  late final GeneratedColumn<String?> imageDir = GeneratedColumn<String?>(
+  @override
+  late final GeneratedColumn<String> imageDir = GeneratedColumn<String>(
       'image_dir', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: DriftSqlType.string, requiredDuringInsert: true);
   final VerificationMeta _resultMeta = const VerificationMeta('result');
-  late final GeneratedColumn<String?> result = GeneratedColumn<String?>(
+  @override
+  late final GeneratedColumn<String> result = GeneratedColumn<String>(
       'result', aliasedName, true,
-      typeName: 'TEXT', requiredDuringInsert: false);
+      type: DriftSqlType.string, requiredDuringInsert: false);
   final VerificationMeta _speciesMeta = const VerificationMeta('species');
-  late final GeneratedColumn<String?> species = GeneratedColumn<String?>(
+  @override
+  late final GeneratedColumn<String> species = GeneratedColumn<String>(
       'species', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: DriftSqlType.string, requiredDuringInsert: true);
   final VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
-  late final GeneratedColumn<String?> description = GeneratedColumn<String?>(
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: DriftSqlType.string, requiredDuringInsert: true);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  late final GeneratedColumn<DateTime?> date = GeneratedColumn<DateTime?>(
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
       'date', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
   final VerificationMeta _noteMeta = const VerificationMeta('note');
-  late final GeneratedColumn<String?> note = GeneratedColumn<String?>(
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
       'note', aliasedName, true,
-      typeName: 'TEXT', requiredDuringInsert: false);
+      type: DriftSqlType.string, requiredDuringInsert: false);
   final VerificationMeta _latitudeMeta = const VerificationMeta('latitude');
-  late final GeneratedColumn<double?> latitude = GeneratedColumn<double?>(
+  @override
+  late final GeneratedColumn<double> latitude = GeneratedColumn<double>(
       'latitude', aliasedName, true,
-      typeName: 'REAL', requiredDuringInsert: false);
+      type: DriftSqlType.double, requiredDuringInsert: false);
   final VerificationMeta _longitudeMeta = const VerificationMeta('longitude');
-  late final GeneratedColumn<double?> longitude = GeneratedColumn<double?>(
+  @override
+  late final GeneratedColumn<double> longitude = GeneratedColumn<double>(
       'longitude', aliasedName, true,
-      typeName: 'REAL', requiredDuringInsert: false);
+      type: DriftSqlType.double, requiredDuringInsert: false);
   final VerificationMeta _percentageMeta = const VerificationMeta('percentage');
-  late final GeneratedColumn<double?> percentage = GeneratedColumn<double?>(
+  @override
+  late final GeneratedColumn<double> percentage = GeneratedColumn<double>(
       'percentage', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: DriftSqlType.double, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -481,21 +451,44 @@ class $AnalysisTable extends Analysis with TableInfo<$AnalysisTable, Analyze> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Analyze map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Analyze.fromData(data, _db,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Analyze(
+      id: attachedDatabase.options.types
+          .read(DriftSqlType.int, data['${effectivePrefix}id']),
+      imageDir: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}image_dir'])!,
+      result: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}result']),
+      species: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}species'])!,
+      description: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      date: attachedDatabase.options.types
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      note: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}note']),
+      latitude: attachedDatabase.options.types
+          .read(DriftSqlType.double, data['${effectivePrefix}latitude']),
+      longitude: attachedDatabase.options.types
+          .read(DriftSqlType.double, data['${effectivePrefix}longitude']),
+      percentage: attachedDatabase.options.types
+          .read(DriftSqlType.double, data['${effectivePrefix}percentage'])!,
+    );
   }
 
   @override
   $AnalysisTable createAlias(String alias) {
-    return $AnalysisTable(_db, alias);
+    return $AnalysisTable(attachedDatabase, alias);
   }
 }
 
 abstract class _$MyDatabase extends GeneratedDatabase {
-  _$MyDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  _$MyDatabase(QueryExecutor e) : super(e);
   late final $AnalysisTable analysis = $AnalysisTable(this);
+  late final AnalysisDAO analysisDAO = AnalysisDAO(this as MyDatabase);
   @override
-  Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+  Iterable<TableInfo<Table, dynamic>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [analysis];
 }
