@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:plant_diagnosis/models/examples/examples.dart';
 import 'package:plant_diagnosis/models/tflite_result.dart';
-import 'package:tflite/tflite.dart';
+import 'package:tflite_maven/tflite.dart';
 
 class TFLiteHelper {
   static Future loadModel(Examples examples) async {
