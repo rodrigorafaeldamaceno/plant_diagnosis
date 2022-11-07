@@ -23,12 +23,10 @@ PODS:
     - sqlite3/fts5
     - sqlite3/perf-threadsafe
     - sqlite3/rtree
-  - TensorFlowLiteC (2.10.0):
-    - TensorFlowLiteC/Core (= 2.10.0)
-  - TensorFlowLiteC/Core (2.10.0)
-  - tflite (1.1.2):
+  - TensorFlowLiteC (2.2.0)
+  - tflite_maven (1.1.5):
     - Flutter
-    - TensorFlowLiteC
+    - TensorFlowLiteC (= 2.2.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -37,7 +35,7 @@ DEPENDENCIES:
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - sqlite3_flutter_libs (from `.symlinks/plugins/sqlite3_flutter_libs/ios`)
-  - tflite (from `.symlinks/plugins/tflite/ios`)
+  - tflite_maven (from `.symlinks/plugins/tflite_maven/ios`)
 
 SPEC REPOS:
   trunk:
@@ -57,8 +55,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   sqlite3_flutter_libs:
     :path: ".symlinks/plugins/sqlite3_flutter_libs/ios"
-  tflite:
-    :path: ".symlinks/plugins/tflite/ios"
+  tflite_maven:
+    :path: ".symlinks/plugins/tflite_maven/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -68,8 +66,8 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   sqlite3: 50117e9e063a9ef2b865f7bdf2f2601e5d368e9a
   sqlite3_flutter_libs: c6ab7f23670a98fef45a137159452004bc552168
-  TensorFlowLiteC: edf19548f50a1552e43dbd6906f5618a478bd038
-  tflite: 7acd11db0915e2d90ab90474413068568eb605f0
+  TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
+  tflite_maven: ad6bc4d0180978941c077338a8d1ec9ab75b4112
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
