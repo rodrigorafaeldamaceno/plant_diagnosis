@@ -8,14 +8,14 @@ PODS:
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
-  - sqlite3 (3.39.3):
-    - sqlite3/common (= 3.39.3)
-  - sqlite3/common (3.39.3)
-  - sqlite3/fts5 (3.39.3):
+  - sqlite3 (3.39.4):
+    - sqlite3/common (= 3.39.4)
+  - sqlite3/common (3.39.4)
+  - sqlite3/fts5 (3.39.4):
     - sqlite3/common
-  - sqlite3/perf-threadsafe (3.39.3):
+  - sqlite3/perf-threadsafe (3.39.4):
     - sqlite3/common
-  - sqlite3/rtree (3.39.3):
+  - sqlite3/rtree (3.39.4):
     - sqlite3/common
   - sqlite3_flutter_libs (0.0.1):
     - Flutter
@@ -64,7 +64,7 @@ SPEC CHECKSUMS:
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
-  sqlite3: 50117e9e063a9ef2b865f7bdf2f2601e5d368e9a
+  sqlite3: 401936402fe5aa242c07f87fccfee5fc2b606f45
   sqlite3_flutter_libs: c6ab7f23670a98fef45a137159452004bc552168
   TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
   tflite_maven: ad6bc4d0180978941c077338a8d1ec9ab75b4112
